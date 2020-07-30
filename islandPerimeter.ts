@@ -3,47 +3,35 @@ function islandPerimeter(grid: number[][]): number {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === 1) {
-
         try {
           if (grid[i - 1][j] === 0) {
-
+            perimeter += 1;
           }
-          grid[i - 1][j];
-          grid[i][j + 1];
-          grid[i][j - 1];
+
         }
         catch (e) {
-          console.log("north off the grid")
+          perimeter += 1;
         }
         try {
           if (grid[i + 1][j] === 0) {
-
+            perimeter += 1;
           }
         }
         catch (e) {
-          console.log("south off the grid");
-
+          perimeter += 1;
         }
-        try {
-          if (grid[i][j + 1] === 0) {
-
-          }
+        let stepRight = grid[i][j + 1];
+        if (stepRight === 0 || stepRight === undefined) {
+          perimeter += 1;
         }
-        catch (e) {
-          console.log("east off the grid");
-        }
-        try {
-          if (grid[i][j - 1] === 0) {
-            console.log("stepping west");
-          }
-        }
-        catch (e) {
-          console.log("west off the grid");
+        let stepLeft = grid[i][j - 1];
+        if (stepLeft === 0 || stepLeft === undefined) {
+          perimeter += 1;
         }
       }
     }
   }
-  return 0;
+  return perimeter;;
 };
 
 let islandInput = [
