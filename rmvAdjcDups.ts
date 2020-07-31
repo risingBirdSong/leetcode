@@ -1,20 +1,14 @@
 function removeDuplicates(s: string): string {
   const toArr = s.split('');
-  const recurse = (idx: number, justDeleted: boolean) => {
-    for (let i = idx; i < toArr.length; i++) {
-      if (toArr[i] === toArr[i + 1]) {
-        toArr.splice(i, 2);
-        recurse(i, true)
+  for (let i = 0; i < toArr.length; i++) {
+    while (toArr[i] && toArr[i] === toArr[i + 1]) {
+      toArr.splice(i, 2);
+      if (i > 0) {
+        i -= 1;
       }
-      if (justDeleted === true && toArr[i - 1] === toArr[i]) {
-        toArr.splice(i - 1, 2);
-        recurse(i, true);
-      }
-      justDeleted = false;
     }
   }
-  recurse(0, false);
   return toArr.join('');
 };
 
-console.log(removeDuplicates("abbaca"));
+console.log(removeDuplicates("abccbaxzy"));
