@@ -1,14 +1,11 @@
 function removeDuplicates(s: string): string {
   const toArr = s.split('');
-  const recurse = (sArr: string[]) => {
-    for (let i = 0; i < sArr.length; i++) {
-      if (sArr[i] === sArr[i + 1]) {
-        sArr.splice(i, 2);
-        recurse(sArr);
-      }
+  for (let i = 0; i < toArr.length; i++) {
+    if (toArr[i] === toArr[i + 1]) {
+      toArr.splice(i, 2);
+      i = -1;
     }
   }
-  recurse(toArr);
   return toArr.join('');
 };
 
