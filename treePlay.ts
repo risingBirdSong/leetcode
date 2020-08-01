@@ -41,6 +41,33 @@ function exploreTree(rootNode: TreeNode) {
   console.log('arrValues', arrValues);
   // console.log('arrayContainer', arrayContainer);
 }
+// exploreTree(one);
 
+function treeFromArr(input: (number | null)[]) {
+  let root = new TreeNode(input[0] as number, []);
+  let original = root;
+  let nextRoot = new TreeNode(input[2] as number, []);
+  const recurse = (idx: number) => {
+    for (let i = idx; i < input.length; i++) {
+      let cur = input[i];
+      let next = input[i + 1];
+      if (typeof cur === 'number') {
+        root.children?.push(new TreeNode(cur, []))
+      }
+      else if (!cur && typeof next === 'number') {
+        console.log("hitting");
+        root = nextRoot;
+        nextRoot = new TreeNode(next, []);
+        recurse(i + 1);
+      }
 
-exploreTree(one);
+    }
+  }
+  recurse(2);
+  return original;
+}
+console.log(treeFromArr([1, null, 3, 2, 4, null, 5, 6]));
+
+let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6, null, 7,8]);
+
+console.log("end");
