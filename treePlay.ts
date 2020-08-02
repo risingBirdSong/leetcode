@@ -111,6 +111,10 @@ function treeFromArrTwo(input: (number | null)[]) {
       while (!input[i]) {
         i++;
         amountToSkip++;
+        //@ts-ignore
+        if (amountToSkip >= root.children?.length - 1) {
+          throw new Error("skipped past the last child!")
+        }
       }
       //@ts-ignore
       root = root.children[amountToSkip];
@@ -124,6 +128,6 @@ function treeFromArrTwo(input: (number | null)[]) {
 
 
 
-let secondTree = treeFromArrTwo([1, null, 3, 2, 4, null, null, 5, 6, null, 7, 8, null, 9, 10]);
+let secondTree = treeFromArrTwo([1, null, 3, 2, 4, null, null, null, null, 5, 6, null, null, 7, 8, null, 9, 10]);
 
 console.log(secondTree);
