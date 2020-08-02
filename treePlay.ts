@@ -47,16 +47,30 @@ function treeFromArr(input: (number | null)[]) {
   let root = new TreeNode(input[0] as number, []);
   let nextRoot: TreeNode;
   let directChildren: boolean = true;
+  let finish: boolean = false;
   const recurse = (idx: number) => {
     for (let i = idx; i < input.length; i++) {
       let cur = input[i];
       if (cur && directChildren) {
+        if (finish) {
+          return;
+        }
         root.children?.push(new TreeNode(cur, []));
+        if (i === input.length - 1) {
+          finish = true;
+        }
       }
       else if (cur && !directChildren) {
+        if (finish) {
+          return;
+        }
         nextRoot.children?.push(new TreeNode(cur, []));
+        if (i === input.length - 1) {
+          finish = true;
+        }
       }
       else {
+        console.log("how many times hit?");
         //@ts-ignore
         if (root.children[0] && directChildren) {
           //@ts-ignore
