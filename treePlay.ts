@@ -45,29 +45,39 @@ function exploreTree(rootNode: TreeNode) {
 
 function treeFromArr(input: (number | null)[]) {
   let root = new TreeNode(input[0] as number, []);
-  let original = root;
-  let nextRoot = new TreeNode(input[2] as number, []);
+  let nextRoot: TreeNode;
+  let directChildren: boolean = true;
   const recurse = (idx: number) => {
     for (let i = idx; i < input.length; i++) {
       let cur = input[i];
-      let next = input[i + 1];
-      if (typeof cur === 'number') {
-        root.children?.push(new TreeNode(cur, []))
+      if (cur && directChildren) {
+        root.children?.push(new TreeNode(cur, []));
       }
-      else if (!cur && typeof next === 'number') {
-        console.log("hitting");
-        root = nextRoot;
-        nextRoot = new TreeNode(next, []);
+      else if (cur && !directChildren) {
+        nextRoot.children?.push(new TreeNode(cur, []));
+      }
+      else {
+        //@ts-ignore
+        if (root.children[0] && directChildren) {
+          //@ts-ignore
+          nextRoot = root.children[0];
+        }
+        //@ts-ignore
+        else if (nextRoot.children[0] && !directChildren) {
+          //@ts-ignore
+          nextRoot = nextRoot.children[0];
+        }
+        directChildren = false;
+        console.log("i should only be called once");
         recurse(i + 1);
       }
-
     }
   }
   recurse(2);
-  return original;
+  return root;
 }
-console.log(treeFromArr([1, null, 3, 2, 4, null, 5, 6]));
+// console.log(treeFromArr([1, null, 3, 2, 4, null, 5, 6]));
 
-let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6, null, 7,8]);
+let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6]);
 
-console.log("end");
+console.log("end", newTree);
