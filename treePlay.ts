@@ -93,3 +93,33 @@ function treeFromArr(input: (number | null)[]) {
 let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6, null, 7, 8, null, 9, 10]);
 
 console.log("end", newTree);
+
+
+function treeFromArrTwo(input: (number | null)[]) {
+  let root = new TreeNode(input[0] as number, []);
+  const original = root;
+  for (let i = 2; i < input.length; i++) {
+    let cur = input[i];
+    if (typeof cur === 'number') {
+      root.children?.push(new TreeNode(cur, []));
+    }
+    else {
+      let amountToSkip = 0;
+      //i++ right away in the else because were counting additional nulls
+      // the first is the vertical separator while additional nulls are horizontal separators.
+      i++;
+      while (!input[i]) {
+        i++;
+        amountToSkip++;
+      }
+      //@ts-ignore
+      root = root.children[amountToSkip];
+    }
+  }
+  return original;
+}
+
+
+let secondTree = treeFromArrTwo([1, null, 3, 2, 4, null, null, 5, 6, null, 7, 8, null, 9, 10]);
+
+console.log(secondTree);
