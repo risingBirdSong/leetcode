@@ -114,10 +114,14 @@ function treeFromArrTwo(input: (number | null)[]) {
       }
       //@ts-ignore
       root = root.children[amountToSkip];
+      //backtrack once so that the next iteration will bring us to the next number so we can add it
+      i--;
     }
   }
   return original;
 }
+//[1, null, 3, 2, 4, null, null, 5, 6, null, 7, 8, null, 9, 10]
+
 
 
 let secondTree = treeFromArrTwo([1, null, 3, 2, 4, null, null, 5, 6, null, 7, 8, null, 9, 10]);
