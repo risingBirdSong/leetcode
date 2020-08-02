@@ -70,7 +70,6 @@ function treeFromArr(input: (number | null)[]) {
         }
       }
       else {
-        console.log("how many times hit?");
         //@ts-ignore
         if (root.children[0] && directChildren) {
           //@ts-ignore
@@ -82,7 +81,6 @@ function treeFromArr(input: (number | null)[]) {
           nextRoot = nextRoot.children[0];
         }
         directChildren = false;
-        console.log("i should only be called once");
         recurse(i + 1);
       }
     }
@@ -92,6 +90,6 @@ function treeFromArr(input: (number | null)[]) {
 }
 // console.log(treeFromArr([1, null, 3, 2, 4, null, 5, 6]));
 
-let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6]);
+let newTree = treeFromArr([1, null, 3, 2, 4, null, 5, 6, null, 7, 8, null, 9, 10]);
 
 console.log("end", newTree);
