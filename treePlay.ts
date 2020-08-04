@@ -131,46 +131,70 @@ function treeFromArrTwo(input: (number | null)[]) {
 // let secondTree = treeFromArrTwo([1, null, 3, 2, 4, null, null, 5, 6, null, null, 7, 8, null, 9, 10]);
 
 
-interface NodeWithParentI extends TreeNode {
-  parent: TreeNode | null;
+interface NodeWithParentI {
+  val: number;
+  children: TreeNode[];
+  parent?: TreeNode;
 }
 
 class TreeNodePrnt implements NodeWithParentI {
-  constructor(public val: number, public children: NodeWithParentI[] | null, public parent: NodeWithParentI | null) {
+  constructor(public val: number, public children: NodeWithParentI[], public parent?: NodeWithParentI | undefined) {
     this.val = val;
     this.children = children;
-    this.parent = parent;
+    this.parent = parent || undefined;
   }
 }
 
 function treeFromArrThree(input: (number | null)[]) {
-  let root = new TreeNodePrnt(input[0] as number, [], null);
-  let anchor = root;
+  let root = new TreeNodePrnt(input[0] as number, [], undefined);
   let childIdx = 0;
   let original = root;
   for (let i = 2; i < input.length; i++) {
     if (typeof input[i] === "number") {
       root.children?.push(new TreeNodePrnt(input[i] as number, [], root));
     }
-    if (!input[i]) {
-      //@ts-ignore
-      if (childIdx >= anchor.children?.length) {
-        childIdx = 0;
+    if (input[i] === null) {
+
+      if (!root.parent) {
         //@ts-ignore
-        anchor = anchor.children[0];
-      }
-      //@ts-ignore
-      if (anchor.children?.length > 0) {
-        //@ts-ignore
-        root = anchor.children[childIdx];
+        root = root.children[childIdx];
         childIdx++;
       }
+      else if (root.parent && childIdx < root?.parent?.children.length) {
+        //@ts-ignore
+        if (root.parent.children[childIdx]) {
+          //Why is TS assuming newRoot is a TreeNode, and not TreeNodePrnt? For this reason, i'm typing "as";
+          let newRoot = root.parent.children[childIdx] as TreeNodePrnt;
+          newRoot.parent = root.parent;
+          root = newRoot;
+          childIdx++;
+        }
+      }
+      else if (root.parent && childIdx === root.parent.children.length) {
+        childIdx = 0;
+
+
+        if (root.parent.children[childIdx]) {
+          let newParent = root.parent.children[childIdx] as TreeNodePrnt;
+          let newRoot = newParent.children[childIdx] as TreeNodePrnt;
+          newRoot.parent = newParent;
+          root = newRoot;
+          childIdx++;
+        }
+      }
+
     }
   }
   return original;
 }
 
-let thirdInput = [1, null, 2, 3, 4, 5, null, null, 6, 7, null, 8, null, 9, 10];
+
+//   --  1
+//-2   3    4    5
+//6  7  8  9 10 11 12 13
+//14 15 16 17
+
+let thirdInput = [1, null, 2, 3, 4, 5, null, 6, 7, null, 8, 9, null, 10, 11, null, 12, 13, null, 14, null, 15, null, 16, null, 17];
 let thirdTree = treeFromArrThree(thirdInput);
 // let thirdTree = treeFromArrThree([1, null, 2, 3, 4, 5, null, null, 6, 7, null, 8, null, 9, 10, null, null, 11, null, 12, null, 13, null, null, 14]);
 console.log("stopping");
@@ -184,5 +208,3 @@ console.log("stopping");
 
 
 
-
-console.log("stopping");
