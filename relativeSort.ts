@@ -20,8 +20,6 @@ function relativeSortArray(arr1: number[], arr2: number[]): number[] {
     }
 
   }));
-  console.log("arr1Extras", arr1Extras);
-
   arr1MatchArr2.sort((a, b) => {
     if (arr2.indexOf(a) > arr2.indexOf(b)) {
       return 1;
