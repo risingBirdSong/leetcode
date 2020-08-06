@@ -1,7 +1,7 @@
 interface minDistanceComplementI {
   [keyof: number]: number;
 }
-interface numAndIndx {
+interface doesItExistI {
   [keyof: number]: number;
 }
 
@@ -23,29 +23,32 @@ function minimumAbsDifference(arr: number[]): number[][] {
       }
     }
   }
-  console.log("minDistance", minDistance);
   let minDistanceComplement: minDistanceComplementI = {}
-  let doesItExist: numAndIndx = {};
+  let doesItExist: doesItExistI = {};
   for (let i = 0; i < arr.length; i++) {
     let num = arr[i];
     if (!minDistanceComplement[num]) {
       minDistanceComplement[num] = num - minDistance;
-      doesItExist[num] = i;
+      doesItExist[num] = num;
     }
   }
-  console.log("minDistanceComplement", minDistanceComplement);
-  console.log("doesItExist", doesItExist);
-
   let output: number[][] = [];
   arr.sort((a, b) => a - b);
-  console.log("arr", arr);
   for (let num of arr) {
     if (minDistanceComplement[num + minDistance] = num) {
-      output.push([minDistanceComplement[num], num]);
+      if (doesItExist[num - minDistance]) {
+        output.push([minDistanceComplement[num], num]);
+      }
     }
   }
   return output;
 };
 
 
-console.log(minimumAbsDifference([4, 2, 1, 3]));
+console.log(minimumAbsDifference([1, 2, 3, 4]));
+
+// console.log("arr", arr);
+// console.log("does it exist", doesItExist);
+
+// console.log("mindDistance", minDistance);
+// console.log("minDistanceComplement", minDistanceComplement);
