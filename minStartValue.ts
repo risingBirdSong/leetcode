@@ -1,8 +1,15 @@
 function minStartValue(nums: number[]): number {
-  return 0;
+  let min = Infinity;
+  let total = 0;
+
+  for (let num of nums) {
+    total += num;
+    min = Math.min(total, min);
+  }
+  return min < 0 ? Math.abs(min) + 1 : 1;
 };
 
-// console.log(minStartValue([]));
+console.log(minStartValue([1,-2,-3]));
 
 // we care about all the numbers between start of numsArr and the the last - number, the pos numbers after that dont impact
 
