@@ -31,25 +31,31 @@ function matprint(mat: any[]) {
 function isToeplitzMatrix(matrix: number[][]): boolean {
   let validToeplitz = true;
   for (let i = 0; i < matrix[0].length - 1; i++) {
-    let gridX = 0;
-    let gridY = i;
-    while (matrix[gridX]?.[gridY]) {
-      matrix[gridX][gridY] = -1;
+    let gridX = i;
+    let gridY = 0;
+    let currentVal = matrix[gridY][gridX];
+    //subtle bug where if i test with a value equals zero, the while doesnt enter and the zero val isnt checked 
+    // while (matrix[gridY]?.[gridX]) {
+    while (typeof matrix[gridY]?.[gridX] === "number") {
+      matrix[gridY]?.[gridX] !== currentVal ? validToeplitz = false : ""
       gridY++;
       gridX++;
     }
   }
-  for (let i = 0; i < matrix.length - 1; i++) {
-    let gridX = i;
-    let gridY = 0;
-    while (matrix[gridX]?.[gridY]) {
-      matrix[gridX][gridY] = -1;
+  for (let i = 1; i < matrix.length - 1; i++) {
+
+    let gridX = 0;
+    let gridY = i;
+    let currentVal = matrix[gridY][gridX];
+    while (typeof matrix[gridY]?.[gridX] === "number") {
+
+      matrix[gridY]?.[gridX] !== currentVal ? validToeplitz = false : ""
       gridY++;
       gridX++;
     }
   }
   console.log(matprint(matrix));
-  return false;
+  return validToeplitz;
 };
 
-console.log(isToeplitzMatrix(trueToeplitzM));
+console.log("is it valide", isToeplitzMatrix(falseToeplitz));
