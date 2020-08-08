@@ -30,6 +30,7 @@ function matprint(mat: any[]) {
 
 function isToeplitzMatrix(matrix: number[][]): boolean {
   let validToeplitz = true;
+  
   for (let i = 0; i < matrix[0].length - 1; i++) {
     let gridX = i;
     let gridY = 0;
@@ -54,7 +55,6 @@ function isToeplitzMatrix(matrix: number[][]): boolean {
       gridX++;
     }
   }
-  console.log(matprint(matrix));
   return validToeplitz;
 };
 
