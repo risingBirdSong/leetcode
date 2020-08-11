@@ -10,35 +10,21 @@ function maxNumberOfBalloons(text: string): number {
     "o": 0,
     "n": 0
   };
-
   for (let str of text) {
-    if (typeof dict[str] === "number") {
+    if (str === "l" || str === "o") {
+      dict[str] += .5;
+    }
+    else if (typeof dict[str] === "number") {
       dict[str]++;
     }
   }
-  let entries = Object.entries(dict);
-  entries.sort((a, b) => {
-    if (a[1] < b[1]) {
-      return -1;
-    }
-    else if (a[1] > b[1]) {
-      return 1;
-    }
-    return 0;
-  })
-  let candidate = entries[0][1];
-  if (dict["l"] < candidate * 2) {
-    if (dict["l"] % 2 !== 0) {
-      dict["l"]--;
-      return dict["l"] / 2
-    }
-    else return dict["l"] / 2;
+  let min = Infinity;
+  for (let ltr in dict) {
+    min = Math.min(min, dict[ltr])
   }
-  console.log("dict", dict);
-
-  return candidate;
+  return Math.floor(min);
 };
 
-console.log("ballones", maxNumberOfBalloons("loonbalxbalpoon"));
+console.log("ballones", maxNumberOfBalloons("leetcode"));
 
 // "test".indexOf()
