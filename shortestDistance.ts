@@ -1,25 +1,21 @@
 
 function shortestDistance(words: string[], word1: string, word2: string): number {
-  let word1Idxs: number[] = [];
-  let word2idxs: number[] = [];
+  let min = Infinity;
+  let lastIdx = Infinity;
+  let lastWord: string | undefined = undefined;
   for (let i = 0; i < words.length; i++) {
     let word = words[i];
-    if (word === word1) {
-      word1Idxs.push(i);
-    }
-    else if (word === word2) {
-      word2idxs.push(i);
-    }
-  }
-  console.log("idxs1", word1Idxs);
-  console.log("idxs2", word2idxs);
-
-  let min = Infinity;
-  for (let idx1 of word1Idxs) {
-    for (let idx2 of word2idxs) {
-      min = Math.min(min, Math.abs(idx2 - idx1))
+    if (word1 === word || word2 === word) {
+      if (lastWord === word) {
+        lastIdx = i;
+        continue;
+      }
+      min = Math.min(min, Math.abs(lastIdx - i));
+      lastIdx = i;
+      lastWord = word;
     }
   }
+  // console.log("trk", trk);
   return min;
 };
 
