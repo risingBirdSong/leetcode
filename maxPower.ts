@@ -14,6 +14,3 @@ function maxPower(s: string): number {
   }
   return max;
 };
-
-// console.log(maxPower("llleetcodessssdssssss"));
-console.log(maxPower("tourist"));
