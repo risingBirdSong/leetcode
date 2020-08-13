@@ -34,7 +34,7 @@ function reverseOnlyLettersA(S: string): string {
 // notLtrCount is to account for left offsets for non letters our for loop has encountered
 // nudgeLeft is to account for non letters our for loop hasn't encountered yet.
 
-function reverseOnlyLetters(S: string): string {
+function reverseOnlyLettersB(S: string): string {
   let notLtrCount = 0;
   let nudgeLeft = 0;
   const onlyLtr = new RegExp(/[a-z]/i);
@@ -58,8 +58,7 @@ function reverseOnlyLetters(S: string): string {
   return output.join("");
 }
 //j-Ih-gfE-dCba 
-// console.log(reverseOnlyLetters("Test-ng-Leet-code-Q-"));
-console.log(reverseOnlyLetters("a1bc2d"));
-// console.log(reverseOnlyLetters("a-bC-dEf-ghIj"));
-
+// console.log(reverseOnlyLettersB("Test-ng-Leet-code-Q-"));
+console.log(reverseOnlyLettersB("a1bc2d"));
+// console.log(reverseOnlyLettersB("a-bC-dEf-ghIj"));
 
