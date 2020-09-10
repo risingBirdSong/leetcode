@@ -1,3 +1,5 @@
+//problem
+//https://leetcode.com/problems/distance-between-bus-stops/discuss/?currentPage=1&orderBy=most_votes&query=
 function distanceBetweenBusStops(distance: number[], start: number, destination: number): number {
   let forwardDist = 0;
   let backwardsDist = 0;
@@ -18,7 +20,7 @@ function distanceBetweenBusStops(distance: number[], start: number, destination:
     }
     idx--;
     backwardsDist += distance[idx];
-  }  
+  }
   return [forwardDist, backwardsDist].sort((a, b) => a - b)[0];
 };
 
