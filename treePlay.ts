@@ -1,7 +1,7 @@
 
-interface treeNodeI {
+interface treeNodePlayI {
   val: number;
-  children: TreeNode[] | null;
+  children: TreeNodePlay[] | null;
 }
 
 // function treeNode(val: number, children: treeNodeI[] | null): treeNodeI {
@@ -10,26 +10,26 @@ interface treeNodeI {
 //   return this;
 // }
 
-class TreeNode implements treeNodeI {
-  constructor(public val: number, public children: treeNodeI[] | null) {
+class TreeNodePlay implements treeNodePlayI {
+  constructor(public val: number, public children: treeNodePlayI[] | null) {
     this.val = val;
     this.children = children;
   }
 }
 
-let five = new TreeNode(5, null);
-let six = new TreeNode(6, null);
+let five = new TreeNodePlay(5, null);
+let six = new TreeNodePlay(6, null);
 
-let four = new TreeNode(4, null);
-let two = new TreeNode(2, null)
-let three = new TreeNode(3, [five, six]);
+let four = new TreeNodePlay(4, null);
+let two = new TreeNodePlay(2, null)
+let three = new TreeNodePlay(3, [five, six]);
 
-let one = new TreeNode(1, [three, two, four]);
+let one = new TreeNodePlay(1, [three, two, four]);
 
-function exploreTree(rootNode: TreeNode) {
+function exploreTree(rootNode: TreeNodePlay) {
   let arrValues: number[] = [];
   // let arrayContainer = [];
-  let recurse = (node: TreeNode) => {
+  let recurse = (node: TreeNodePlay) => {
     arrValues.push(node.val);
     if (node.children) {
       for (let child of node.children) {
@@ -44,8 +44,8 @@ function exploreTree(rootNode: TreeNode) {
 // exploreTree(one);
 
 function treeFromArr(input: (number | null)[]) {
-  let root = new TreeNode(input[0] as number, []);
-  let nextRoot: TreeNode;
+  let root = new TreeNodePlay(input[0] as number, []);
+  let nextRoot: TreeNodePlay;
   let directChildren: boolean = true;
   let finish: boolean = false;
   const recurse = (idx: number) => {
@@ -55,7 +55,7 @@ function treeFromArr(input: (number | null)[]) {
         if (finish) {
           return;
         }
-        root.children?.push(new TreeNode(cur, []));
+        root.children?.push(new TreeNodePlay(cur, []));
         if (i === input.length - 1) {
           finish = true;
         }
@@ -64,7 +64,7 @@ function treeFromArr(input: (number | null)[]) {
         if (finish) {
           return;
         }
-        nextRoot.children?.push(new TreeNode(cur, []));
+        nextRoot.children?.push(new TreeNodePlay(cur, []));
         if (i === input.length - 1) {
           finish = true;
         }
@@ -96,12 +96,12 @@ console.log("end", newTree);
 
 
 function treeFromArrTwo(input: (number | null)[]) {
-  let root = new TreeNode(input[0] as number, []);
+  let root = new TreeNodePlay(input[0] as number, []);
   const original = root;
   for (let i = 2; i < input.length; i++) {
     let cur = input[i];
     if (typeof cur === 'number') {
-      root.children?.push(new TreeNode(cur, []));
+      root.children?.push(new TreeNodePlay(cur, []));
     }
     else {
       let amountToSkip = 0;
@@ -133,8 +133,8 @@ function treeFromArrTwo(input: (number | null)[]) {
 
 interface NodeWithParentI {
   val: number;
-  children: TreeNode[];
-  parent?: TreeNode;
+  children: TreeNodePlay[];
+  parent?: TreeNodePlay;
 }
 
 class TreeNodePrnt implements NodeWithParentI {
