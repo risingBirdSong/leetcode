@@ -10,33 +10,25 @@ class TreeNode {
   }
 }
 
-interface doesExistI {
+interface objTrackerI {
   [keyof: number]: number;
 }
 class BST {
-  count: number;
-  private doesExist: doesExistI;
+  private objTracker: objTrackerI;
   constructor(public root: TreeNode) {
     this.root = root;
-    this.count = 1;
-    this.doesExist = {};
+    this.objTracker = {};
+    this.objTracker[root.val] = 1;
   }
   insert(input: number | number[]) {
     let newNode: TreeNode;
     if (typeof input === "number") {
       newNode = new TreeNode(input);
-      if (this.root === null) {
-        this.root = newNode;
-      }
       this.insertNode(this.root, newNode);
-
     }
     else {
       for (let num of input) {
         newNode = new TreeNode(num);
-        if (this.root === null) {
-          this.root = newNode;
-        }
         this.insertNode(this.root, newNode);
       }
     }
@@ -46,16 +38,14 @@ class BST {
 
     if (newNode.val < node.val) {
       if (!node.left) {
-        this.count++;
-        this.doesExist[node.val] = 1;
+        this.objTracker[newNode.val] = 1;
         node.left = newNode;
       }
       this.insertNode(node.left, newNode)
     }
     else if (newNode.val > node.val) {
       if (!node.right) {
-        this.count++;
-        this.doesExist[node.val] = 1;
+        this.objTracker[newNode.val] = 1;
         node.right = newNode;
       }
       this.insertNode(node.right, newNode);
@@ -78,13 +68,36 @@ class BST {
     }
     recurse(this.root)
   }
-  public getCount() {
-    console.log("this count", this.count);
-    return this.count;
+  public getSize() {
+
+    return Object.entries(this.objTracker).length;
   }
-  public doesContain(num: number) {
-    console.log("is it contained?", this.doesExist[num] ? "yes" : "no");
-    return this.doesExist[num]
+  //a hash version
+  public doesContainHash(num: number) {
+    console.log("is it contained?", this.objTracker[num] ? "yes" : "no");
+    console.log("hash", this.objTracker);
+
+    return this.objTracker[num]
+  }
+  // a recursive search version
+  public doesContainRecurse(num: number) {
+    const recurse = (node: TreeNode): boolean => {
+      if (node.val === num) {
+        console.log("found it!", node.val);
+        return true;
+      }
+      else if (num < node.val && node.left) {
+        return recurse(node.left);
+      } else if (num > node.val && node.right) {
+        return recurse(node.right);
+      }
+      console.log("val not found");
+      return false;
+    }
+    if (!this.root) {
+      console.log("no root");
+      return false;
+    } return recurse(this.root)
   }
 }
 
@@ -96,9 +109,13 @@ const bst = new BST(new TreeNode(10));
 // bst.insert(7);
 // bst.insert(13);
 bst.insert([9, 11, 8, 12, 7, 13]);
-bst.inOrderPrint();
-bst.doesContain(13);
+// bst.inOrderPrint();
+bst.doesContainHash(13);
+// bst.inOrderPrint();
+// console.log("contains", bst.doesContainRecurse(7));
 
+console.log("size", bst.getSize());
+// console.log("search recurse", bst.doesContainRecurse(13));
 
 
 //generate a Tree from an array
