@@ -14,19 +14,30 @@ class BST {
   constructor(public root: TreeNode | null) {
     this.root = root;
   }
-  insert(val: number) {
-    let newNode = new TreeNode(val);
-    if (this.root === null) {
-      this.root = newNode;
+  insert(input: number | number[]) {
+    let newNode: TreeNode;
+    if (typeof input === "number") {
+      newNode = new TreeNode(input);
+      if (this.root === null) {
+        this.root = newNode;
+      }
+      this.insertNode(this.root, newNode);
+
     }
-    this.insertNode(this.root, newNode);
+    else {
+      for (let num of input) {
+        newNode = new TreeNode(num);
+        if (this.root === null) {
+          this.root = newNode;
+        }
+        this.insertNode(this.root, newNode);
+      }
+    }
+
   }
   private insertNode(node: TreeNode, newNode: TreeNode) {
-    if (newNode.val === node.val) {
-      console.log("same value, ignore");
-      return false;
-    }
-    else if (newNode.val < node.val) {
+
+    if (newNode.val < node.val) {
       if (!node.left) {
         node.left = newNode;
       }
@@ -38,6 +49,7 @@ class BST {
       }
       this.insertNode(node.right, newNode);
     }
+
   }
   public inOrderPrint() {
     if (!this.root) {
@@ -58,16 +70,18 @@ class BST {
 }
 
 const bst = new BST(new TreeNode(10));
-bst.inOrderPrint();
-bst.insert(9);
-bst.insert(11);
-bst.insert(8);
-bst.insert(12);
-bst.insert(7);
-bst.insert(13);
+// bst.insert(9);
+// bst.insert(11);
+// bst.insert(8);
+// bst.insert(12);
+// bst.insert(7);
+// bst.insert(13);
+bst.insert([9, 11, 8, 12, 7, 13])
 bst.inOrderPrint();
 
 
+
+//generate a Tree from an array
 function insertLevelOrder(numbers: number[], root: TreeNode | null, i: number) {
   if (i < numbers.length) {
     let temp = new TreeNode(numbers[i]);
