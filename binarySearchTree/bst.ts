@@ -99,22 +99,57 @@ class BST {
       return false;
     } return recurse(this.root)
   }
+
+  public remove(num: number) {
+    let parent: TreeNode;
+    const recurse = (node: TreeNode) => {
+      if (num < node.val && node.left) {
+        parent = node;
+        recurse(node.left);
+      } else if (num > node.val && node.right) {
+        parent = node;
+        recurse(node.right);
+      } else if (num === node.val) {
+        if (!node.left && !node.right) {
+          delete this.objTracker[num];
+          //how to get rid of this ts-ignore?
+          //@ts-ignore
+          node = null;
+        } else if (node.left && node.right) {
+          let temp = node;
+          delete this.objTracker[temp.val];
+          let descend = node.left;
+          while (descend.right !== null) {
+            descend = descend.right;
+          }
+          temp.val = descend.val;
+          //@ts-ignore
+          descend = null;
+        }
+        else if (node.val < parent.val) {
+          parent.left = node.right;
+          delete this.objTracker[num];
+          //@ts-ignore
+          node = null;
+        } else if (node.val > parent.val) {
+          parent.right = node.left;
+          delete this.objTracker[num];
+          //@ts-ignore
+          node = null;
+        }
+
+      }
+    }
+    recurse(this.root);
+  }
 }
 
-const bst = new BST(new TreeNode(10));
-// bst.insert(9);
-// bst.insert(11);
-// bst.insert(8);
-// bst.insert(12);
-// bst.insert(7);
-// bst.insert(13);
-bst.insert([9, 11, 8, 12, 7, 13]);
-// bst.inOrderPrint();
-bst.doesContainHash(13);
-// bst.inOrderPrint();
+const bst = new BST(new TreeNode(4));
+bst.insert([3, 2, 1]);
+bst.remove(1)
+bst.inOrderPrint();
 // console.log("contains", bst.doesContainRecurse(7));
 
-console.log("size", bst.getSize());
 // console.log("search recurse", bst.doesContainRecurse(13));
 
 
