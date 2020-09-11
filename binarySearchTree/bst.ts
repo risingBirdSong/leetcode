@@ -11,8 +11,10 @@ class TreeNode {
 }
 
 class BST {
-  constructor(public root: TreeNode | null) {
+  count: number;
+  constructor(public root: TreeNode) {
     this.root = root;
+    this.count = 1;
   }
   insert(input: number | number[]) {
     let newNode: TreeNode;
@@ -39,12 +41,14 @@ class BST {
 
     if (newNode.val < node.val) {
       if (!node.left) {
+        this.count++;
         node.left = newNode;
       }
       this.insertNode(node.left, newNode)
     }
     else if (newNode.val > node.val) {
       if (!node.right) {
+        this.count++;
         node.right = newNode;
       }
       this.insertNode(node.right, newNode);
@@ -67,6 +71,10 @@ class BST {
     }
     recurse(this.root)
   }
+  public getCount() {
+    console.log("this count", this.count);
+    return this.count;
+  }
 }
 
 const bst = new BST(new TreeNode(10));
@@ -78,6 +86,7 @@ const bst = new BST(new TreeNode(10));
 // bst.insert(13);
 bst.insert([9, 11, 8, 12, 7, 13])
 bst.inOrderPrint();
+bst.getCount();
 
 
 
