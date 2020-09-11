@@ -10,11 +10,16 @@ class TreeNode {
   }
 }
 
+interface doesExistI {
+  [keyof: number]: number;
+}
 class BST {
   count: number;
+  private doesExist: doesExistI;
   constructor(public root: TreeNode) {
     this.root = root;
     this.count = 1;
+    this.doesExist = {};
   }
   insert(input: number | number[]) {
     let newNode: TreeNode;
@@ -42,6 +47,7 @@ class BST {
     if (newNode.val < node.val) {
       if (!node.left) {
         this.count++;
+        this.doesExist[node.val] = 1;
         node.left = newNode;
       }
       this.insertNode(node.left, newNode)
@@ -49,6 +55,7 @@ class BST {
     else if (newNode.val > node.val) {
       if (!node.right) {
         this.count++;
+        this.doesExist[node.val] = 1;
         node.right = newNode;
       }
       this.insertNode(node.right, newNode);
@@ -75,6 +82,10 @@ class BST {
     console.log("this count", this.count);
     return this.count;
   }
+  public doesContain(num: number) {
+    console.log("is it contained?", this.doesExist[num] ? "yes" : "no");
+    return this.doesExist[num]
+  }
 }
 
 const bst = new BST(new TreeNode(10));
@@ -84,9 +95,9 @@ const bst = new BST(new TreeNode(10));
 // bst.insert(12);
 // bst.insert(7);
 // bst.insert(13);
-bst.insert([9, 11, 8, 12, 7, 13])
+bst.insert([9, 11, 8, 12, 7, 13]);
 bst.inOrderPrint();
-bst.getCount();
+bst.doesContain(13);
 
 
 
